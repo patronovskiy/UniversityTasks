@@ -12,6 +12,7 @@ namespace CaesarsCode
 {
     public partial class Form1 : Form
     {
+        //FIELDS (VARIABLES)
         //text inputed in textBoxInput
         private string initialText;
         //text encrypted / decrypted with key
@@ -25,6 +26,7 @@ namespace CaesarsCode
 
 
         //form methods
+        //FORM WORK (INITIALIZING)
         public Form1()
         {
             InitializeComponent();
@@ -48,6 +50,9 @@ namespace CaesarsCode
             buttonClear.Click += ButtonClear_Click;
         }
 
+
+        //BUTTONS
+        //click on buttonDecrypt
         private void ButtonDecrypt_Click(object sender, EventArgs e)
         {
             try
@@ -59,21 +64,13 @@ namespace CaesarsCode
             }
             catch
             {
+                //if text was inputed as key
                 MessageBox.Show("You must input number (integer)");
                 textBoxKey.Focus();
             }
         }
 
-        private void ButtonClear_Click(object sender, EventArgs e)
-        {
-            textBoxInput.Text = "Input text";
-            textBoxKey.Text = "Input key for encrypting / decrypting";
-            textBoxOutput.Text = "";
-
-            isKeyDefault = true;
-            isTextDefault = true;
-    }
-
+        //click on buttonEncrypt
         private void ButtonEncrypt_Click(object sender, EventArgs e)
         {
             try
@@ -85,12 +82,27 @@ namespace CaesarsCode
             }
             catch
             {
-                //textBoxKey.Text = "0";
+                //if text was inputed as key
                 MessageBox.Show("You must input number (integer)");
                 textBoxKey.Focus();
             }
         }
 
+        //click on buttonClear (clear all text iputs and reset bool variables)
+        private void ButtonClear_Click(object sender, EventArgs e)
+        {
+            textBoxInput.Text = "Input text";
+            textBoxKey.Text = "Input key for encrypting / decrypting";
+            textBoxOutput.Text = "";
+
+            isKeyDefault = true;
+            isTextDefault = true;
+        }
+
+
+        //TEXT INPUTS
+
+        //textBoxKey
         private void TextBoxKey_Click(object sender, EventArgs e)
         {
             if (isKeyDefault == true)
@@ -98,9 +110,10 @@ namespace CaesarsCode
                 textBoxKey.Text = "";
                 isKeyDefault = false;
             }
-            
         }
 
+        //textBoxInput
+        //click on textBoxInput
         private void TextBoxInput_Click(object sender, EventArgs e)
         {
             if (isTextDefault == true)
@@ -111,14 +124,16 @@ namespace CaesarsCode
             
         }
 
+        //input text in textBoxInput
         private void TextBoxInput_TextChanged(object sender, EventArgs e)
         {
             initialText = textBoxInput.Text;
         }
 
 
+        // METHODS FOR ENCRYPT / DECRYPT
 
-        // methods of text handling
+        //Encrypt - shifts Unicode characters by "key" value
         public string Encrypt(string text, int key)
         {
             char[] initialCharArray = text.ToCharArray();
@@ -134,6 +149,7 @@ namespace CaesarsCode
             return encryptedText;
         }
 
+        //Decrypt - shifts Unicode characters by inversed "key" value
         public string Decrypt(string text, int key)
         {
             key = -key;
