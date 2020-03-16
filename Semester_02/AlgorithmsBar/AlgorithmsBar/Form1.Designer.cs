@@ -29,8 +29,7 @@
         private void InitializeComponent()
         {
             this.tabs = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.algorithmsTab = new System.Windows.Forms.TabPage();
             this.arrayGroup = new System.Windows.Forms.GroupBox();
             this.uploadFileButton = new System.Windows.Forms.Button();
             this.createFileButton = new System.Windows.Forms.Button();
@@ -43,49 +42,54 @@
             this.arraySizeLabel = new System.Windows.Forms.Label();
             this.arraySizeInput = new System.Windows.Forms.TextBox();
             this.afterArrayGroup = new System.Windows.Forms.GroupBox();
+            this.afterArrayTextBox = new System.Windows.Forms.TextBox();
             this.beforeArrayGroup = new System.Windows.Forms.GroupBox();
+            this.beforeArrayTextBox = new System.Windows.Forms.TextBox();
             this.algorithmsGroup = new System.Windows.Forms.GroupBox();
+            this.shellRadio = new System.Windows.Forms.RadioButton();
             this.bubbleRadio = new System.Windows.Forms.RadioButton();
             this.insertionRadio = new System.Windows.Forms.RadioButton();
+            this.serviceTab = new System.Windows.Forms.TabPage();
+            this.infoGroup = new System.Windows.Forms.GroupBox();
+            this.nameLabel = new System.Windows.Forms.Label();
+            this.algorithmName = new System.Windows.Forms.Label();
+            this.complexity = new System.Windows.Forms.Label();
+            this.complexityLabel = new System.Windows.Forms.Label();
+            this.descriptionLabel = new System.Windows.Forms.Label();
+            this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.tabs.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.algorithmsTab.SuspendLayout();
             this.arrayGroup.SuspendLayout();
+            this.afterArrayGroup.SuspendLayout();
+            this.beforeArrayGroup.SuspendLayout();
             this.algorithmsGroup.SuspendLayout();
+            this.infoGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabs
             // 
-            this.tabs.Controls.Add(this.tabPage1);
-            this.tabs.Controls.Add(this.tabPage2);
+            this.tabs.Controls.Add(this.algorithmsTab);
+            this.tabs.Controls.Add(this.serviceTab);
             this.tabs.Location = new System.Drawing.Point(1, 2);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
-            this.tabs.Size = new System.Drawing.Size(1080, 539);
+            this.tabs.Size = new System.Drawing.Size(1080, 665);
             this.tabs.TabIndex = 0;
             // 
-            // tabPage1
+            // algorithmsTab
             // 
-            this.tabPage1.Controls.Add(this.arrayGroup);
-            this.tabPage1.Controls.Add(this.afterArrayGroup);
-            this.tabPage1.Controls.Add(this.beforeArrayGroup);
-            this.tabPage1.Controls.Add(this.algorithmsGroup);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1072, 510);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1072, 510);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.algorithmsTab.Controls.Add(this.infoGroup);
+            this.algorithmsTab.Controls.Add(this.arrayGroup);
+            this.algorithmsTab.Controls.Add(this.afterArrayGroup);
+            this.algorithmsTab.Controls.Add(this.beforeArrayGroup);
+            this.algorithmsTab.Controls.Add(this.algorithmsGroup);
+            this.algorithmsTab.Location = new System.Drawing.Point(4, 25);
+            this.algorithmsTab.Name = "algorithmsTab";
+            this.algorithmsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.algorithmsTab.Size = new System.Drawing.Size(1072, 636);
+            this.algorithmsTab.TabIndex = 0;
+            this.algorithmsTab.Text = "Algorithms";
+            this.algorithmsTab.UseVisualStyleBackColor = true;
             // 
             // arrayGroup
             // 
@@ -101,7 +105,7 @@
             this.arrayGroup.Controls.Add(this.arraySizeInput);
             this.arrayGroup.Location = new System.Drawing.Point(711, 6);
             this.arrayGroup.Name = "arrayGroup";
-            this.arrayGroup.Size = new System.Drawing.Size(355, 498);
+            this.arrayGroup.Size = new System.Drawing.Size(355, 624);
             this.arrayGroup.TabIndex = 7;
             this.arrayGroup.TabStop = false;
             this.arrayGroup.Text = "Array";
@@ -195,35 +199,67 @@
             // 
             // afterArrayGroup
             // 
-            this.afterArrayGroup.Location = new System.Drawing.Point(307, 264);
+            this.afterArrayGroup.Controls.Add(this.afterArrayTextBox);
+            this.afterArrayGroup.Location = new System.Drawing.Point(352, 320);
             this.afterArrayGroup.Name = "afterArrayGroup";
-            this.afterArrayGroup.Size = new System.Drawing.Size(398, 240);
+            this.afterArrayGroup.Size = new System.Drawing.Size(353, 310);
             this.afterArrayGroup.TabIndex = 6;
             this.afterArrayGroup.TabStop = false;
             this.afterArrayGroup.Text = "AfterArray";
             // 
+            // afterArrayTextBox
+            // 
+            this.afterArrayTextBox.Location = new System.Drawing.Point(14, 21);
+            this.afterArrayTextBox.Multiline = true;
+            this.afterArrayTextBox.Name = "afterArrayTextBox";
+            this.afterArrayTextBox.Size = new System.Drawing.Size(325, 270);
+            this.afterArrayTextBox.TabIndex = 1;
+            // 
             // beforeArrayGroup
             // 
-            this.beforeArrayGroup.Location = new System.Drawing.Point(307, 6);
+            this.beforeArrayGroup.Controls.Add(this.beforeArrayTextBox);
+            this.beforeArrayGroup.Location = new System.Drawing.Point(352, 6);
             this.beforeArrayGroup.Name = "beforeArrayGroup";
-            this.beforeArrayGroup.Size = new System.Drawing.Size(398, 252);
+            this.beforeArrayGroup.Size = new System.Drawing.Size(353, 310);
             this.beforeArrayGroup.TabIndex = 5;
             this.beforeArrayGroup.TabStop = false;
             this.beforeArrayGroup.Text = "BeforeArray";
             // 
+            // beforeArrayTextBox
+            // 
+            this.beforeArrayTextBox.Location = new System.Drawing.Point(14, 25);
+            this.beforeArrayTextBox.Multiline = true;
+            this.beforeArrayTextBox.Name = "beforeArrayTextBox";
+            this.beforeArrayTextBox.Size = new System.Drawing.Size(325, 270);
+            this.beforeArrayTextBox.TabIndex = 0;
+            // 
             // algorithmsGroup
             // 
+            this.algorithmsGroup.Controls.Add(this.shellRadio);
             this.algorithmsGroup.Controls.Add(this.bubbleRadio);
             this.algorithmsGroup.Controls.Add(this.insertionRadio);
             this.algorithmsGroup.Location = new System.Drawing.Point(7, 6);
             this.algorithmsGroup.Name = "algorithmsGroup";
-            this.algorithmsGroup.Size = new System.Drawing.Size(294, 498);
+            this.algorithmsGroup.Size = new System.Drawing.Size(339, 252);
             this.algorithmsGroup.TabIndex = 4;
             this.algorithmsGroup.TabStop = false;
             this.algorithmsGroup.Text = "Algorithms";
             // 
+            // shellRadio
+            // 
+            this.shellRadio.AllowDrop = true;
+            this.shellRadio.AutoSize = true;
+            this.shellRadio.Location = new System.Drawing.Point(6, 94);
+            this.shellRadio.Name = "shellRadio";
+            this.shellRadio.Size = new System.Drawing.Size(225, 21);
+            this.shellRadio.TabIndex = 2;
+            this.shellRadio.TabStop = true;
+            this.shellRadio.Text = "Shell sort (сортировка Шелла)";
+            this.shellRadio.UseVisualStyleBackColor = true;
+            // 
             // bubbleRadio
             // 
+            this.bubbleRadio.AllowDrop = true;
             this.bubbleRadio.AutoSize = true;
             this.bubbleRadio.Location = new System.Drawing.Point(6, 67);
             this.bubbleRadio.Name = "bubbleRadio";
@@ -236,6 +272,7 @@
             // insertionRadio
             // 
             this.insertionRadio.AutoSize = true;
+            this.insertionRadio.Checked = true;
             this.insertionRadio.Location = new System.Drawing.Point(6, 40);
             this.insertionRadio.Name = "insertionRadio";
             this.insertionRadio.Size = new System.Drawing.Size(275, 21);
@@ -244,21 +281,109 @@
             this.insertionRadio.Text = "Insertion sort (Сортировка вставками)";
             this.insertionRadio.UseVisualStyleBackColor = true;
             // 
+            // serviceTab
+            // 
+            this.serviceTab.Location = new System.Drawing.Point(4, 25);
+            this.serviceTab.Name = "serviceTab";
+            this.serviceTab.Padding = new System.Windows.Forms.Padding(3);
+            this.serviceTab.Size = new System.Drawing.Size(1072, 510);
+            this.serviceTab.TabIndex = 1;
+            this.serviceTab.Text = "Service";
+            this.serviceTab.UseVisualStyleBackColor = true;
+            // 
+            // infoGroup
+            // 
+            this.infoGroup.Controls.Add(this.descriptionTextBox);
+            this.infoGroup.Controls.Add(this.descriptionLabel);
+            this.infoGroup.Controls.Add(this.complexity);
+            this.infoGroup.Controls.Add(this.complexityLabel);
+            this.infoGroup.Controls.Add(this.algorithmName);
+            this.infoGroup.Controls.Add(this.nameLabel);
+            this.infoGroup.Location = new System.Drawing.Point(7, 264);
+            this.infoGroup.Name = "infoGroup";
+            this.infoGroup.Size = new System.Drawing.Size(339, 366);
+            this.infoGroup.TabIndex = 5;
+            this.infoGroup.TabStop = false;
+            this.infoGroup.Text = "Algorithm info";
+            // 
+            // nameLabel
+            // 
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.nameLabel.Location = new System.Drawing.Point(6, 24);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(59, 17);
+            this.nameLabel.TabIndex = 0;
+            this.nameLabel.Text = "Name: ";
+            // 
+            // algorithmName
+            // 
+            this.algorithmName.AutoSize = true;
+            this.algorithmName.Location = new System.Drawing.Point(71, 24);
+            this.algorithmName.Name = "algorithmName";
+            this.algorithmName.Size = new System.Drawing.Size(90, 17);
+            this.algorithmName.TabIndex = 1;
+            this.algorithmName.Text = "Insertion sort";
+            // 
+            // complexity
+            // 
+            this.complexity.AutoSize = true;
+            this.complexity.Location = new System.Drawing.Point(6, 80);
+            this.complexity.Name = "complexity";
+            this.complexity.Size = new System.Drawing.Size(42, 17);
+            this.complexity.TabIndex = 3;
+            this.complexity.Text = "O(n²)";
+            // 
+            // complexityLabel
+            // 
+            this.complexityLabel.AutoSize = true;
+            this.complexityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.complexityLabel.Location = new System.Drawing.Point(6, 56);
+            this.complexityLabel.Name = "complexityLabel";
+            this.complexityLabel.Size = new System.Drawing.Size(166, 17);
+            this.complexityLabel.TabIndex = 2;
+            this.complexityLabel.Text = "Time complexity O(n):";
+            // 
+            // descriptionLabel
+            // 
+            this.descriptionLabel.AutoSize = true;
+            this.descriptionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.descriptionLabel.Location = new System.Drawing.Point(5, 136);
+            this.descriptionLabel.Name = "descriptionLabel";
+            this.descriptionLabel.Size = new System.Drawing.Size(95, 17);
+            this.descriptionLabel.TabIndex = 4;
+            this.descriptionLabel.Text = "Description:";
+            // 
+            // descriptionTextBox
+            // 
+            this.descriptionTextBox.Location = new System.Drawing.Point(8, 156);
+            this.descriptionTextBox.Multiline = true;
+            this.descriptionTextBox.Name = "descriptionTextBox";
+            this.descriptionTextBox.ReadOnly = true;
+            this.descriptionTextBox.Size = new System.Drawing.Size(318, 190);
+            this.descriptionTextBox.TabIndex = 5;
+            // 
             // algorithmBar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1102, 553);
+            this.ClientSize = new System.Drawing.Size(1102, 679);
             this.Controls.Add(this.tabs);
             this.Name = "algorithmBar";
             this.Text = "AlgorithmsBar";
             this.tabs.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.algorithmsTab.ResumeLayout(false);
             this.arrayGroup.ResumeLayout(false);
             this.arrayGroup.PerformLayout();
+            this.afterArrayGroup.ResumeLayout(false);
+            this.afterArrayGroup.PerformLayout();
+            this.beforeArrayGroup.ResumeLayout(false);
+            this.beforeArrayGroup.PerformLayout();
             this.algorithmsGroup.ResumeLayout(false);
             this.algorithmsGroup.PerformLayout();
+            this.infoGroup.ResumeLayout(false);
+            this.infoGroup.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -266,7 +391,7 @@
         #endregion
 
         private System.Windows.Forms.TabControl tabs;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage algorithmsTab;
         private System.Windows.Forms.GroupBox arrayGroup;
         private System.Windows.Forms.Button uploadFileButton;
         private System.Windows.Forms.Button createFileButton;
@@ -283,7 +408,17 @@
         private System.Windows.Forms.GroupBox algorithmsGroup;
         private System.Windows.Forms.RadioButton bubbleRadio;
         private System.Windows.Forms.RadioButton insertionRadio;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage serviceTab;
+        private System.Windows.Forms.TextBox afterArrayTextBox;
+        private System.Windows.Forms.TextBox beforeArrayTextBox;
+        private System.Windows.Forms.RadioButton shellRadio;
+        private System.Windows.Forms.GroupBox infoGroup;
+        private System.Windows.Forms.TextBox descriptionTextBox;
+        private System.Windows.Forms.Label descriptionLabel;
+        private System.Windows.Forms.Label complexity;
+        private System.Windows.Forms.Label complexityLabel;
+        private System.Windows.Forms.Label algorithmName;
+        private System.Windows.Forms.Label nameLabel;
     }
 }
 
