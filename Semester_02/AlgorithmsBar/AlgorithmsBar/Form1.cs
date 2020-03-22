@@ -22,6 +22,8 @@ namespace AlgorithmsBar
             insertionRadio.CheckedChanged += InsertionRadio_CheckedChanged;
             bubbleRadio.CheckedChanged += BubbleRadio_CheckedChanged;
             shellRadio.CheckedChanged += ShellRadio_CheckedChanged;
+            mergeRadio.CheckedChanged += MergeRadio_CheckedChanged;
+            quickRadio.CheckedChanged += QuickRadio_CheckedChanged;
 
             //create File
             createFileButton.Click += CreateFileButton_Click;
@@ -40,6 +42,7 @@ namespace AlgorithmsBar
         private string sortedText;
         private int[] initialIntArray;
         private int[] sortedIntArray;
+        static string visualizationText;
 
         //state of download of files resolution from checkbox
         //if it is "true", files "input.txt", "output.txt" are not downloaded to computer
@@ -50,7 +53,9 @@ namespace AlgorithmsBar
         {
             BubbleSort, 
             InsertionSort,
-            ShellSort
+            ShellSort,
+            MergeSort,
+            QuickSort
         }
 
         //current algorithm of sorting
@@ -188,15 +193,25 @@ namespace AlgorithmsBar
         {
             //currentSortAlgorithm = getSortAlgorithm();
             initialIntArray = getIntArray(beforeArrayTextBox.Text);
-            switch(currentSortAlgorithm)
+            visualizationText = "";
+            switch (currentSortAlgorithm)
             {
                 case Algorithm.BubbleSort:
                     sortedIntArray = BubbleSort(initialIntArray, initialIntArray.Length);
+                    visualizationTextBox.Text = visualizationText;
                     break;
                 case Algorithm.ShellSort:
+                    sortedIntArray = ShellSort(initialIntArray, initialIntArray.Length);
+                    visualizationTextBox.Text = visualizationText;
                     break;
+                case Algorithm.MergeSort:
+                    sortedIntArray = MergeSort(initialIntArray);
+                    visualizationTextBox.Text = visualizationText;
+                    break;
+                case Algorithm.QuickSort:
                 default:
                     sortedIntArray = InsertionSort(initialIntArray, initialIntArray.Length);
+                    visualizationTextBox.Text = visualizationText;
                     break;
             }
 
@@ -233,7 +248,6 @@ namespace AlgorithmsBar
         {
             if (bubbleRadio.Checked == true)
             {
-
                 return Algorithm.BubbleSort;
 
             } else if (shellRadio.Checked == true) {
@@ -265,7 +279,39 @@ namespace AlgorithmsBar
             return Array;
         }
 
-         private static int[] BubbleSort(int[] Array, int ArraySize)
+
+        private static int[] ShellSort(int[] Array, int ArraySize)
+        {
+            int step = ArraySize / 2;
+            while (step > 0)
+            {
+                for (int k = 0; k < ArraySize; k++)
+                {
+                    for (int i = k; i < ArraySize; i += step)
+                    {
+                        int j = i;
+                        while (j > 0 && j - step >= 0 && Array[j - step] > Array[j])
+                        {
+                            int temp = Array[j - step];
+                            Array[j - step] = Array[j];
+                            Array[j] = temp;
+                            j -= step;
+
+                            //visualization of this step
+                            foreach (int num in Array)
+                            {
+                                visualizationText += num + " ";
+                            }
+                            visualizationText += "\n-->\n";
+                        }
+                    }
+                }
+                step /= 2;
+            }
+            return Array;
+        }
+
+        private static int[] BubbleSort(int[] Array, int ArraySize)
         {
             if (ArraySize < 2)
             {
@@ -288,6 +334,68 @@ namespace AlgorithmsBar
                     }
                 }
                 return Array;
+            }
+        }
+
+        private static int[] Merge(int[] arr1, int[] arr2)
+        //должны передаваться 2 упорядоченных массива
+        {
+            int pointer1 = 0;
+            int pointer2 = 0;
+            int[] mergedArr = new int[arr1.Length + arr2.Length];
+
+            for (int i = 0; i < mergedArr.Length; i++)
+            {
+                if (pointer2 >= arr2.Length && pointer1 < arr1.Length)
+                {
+                    mergedArr[i] = arr1[pointer1];
+                    pointer1++;
+                }
+                else if (pointer1 >= arr1.Length && pointer2 < arr2.Length)
+                {
+                    mergedArr[i] = arr2[pointer2];
+                    pointer2++;
+                }
+                else if (arr1[pointer1] <= arr2[pointer2])
+                {
+                    mergedArr[i] = arr1[pointer1];
+                    pointer1++;
+                }
+                else if (arr1[pointer1] > arr2[pointer2])
+                {
+                    mergedArr[i] = arr2[pointer2];
+                    pointer2++;
+                }
+            }
+            return mergedArr;
+        }
+
+        private static int[] MergeSort(int[] Array)
+        {
+            if (Array.Length < 2)
+            {
+                return Array;
+            }
+            else
+            {
+                int[] leftArr = new int[Array.Length / 2];
+                //учитываем массив с нечетным количеством элементов
+                int rightArrLength = Array.Length % 2 == 0 ? Array.Length / 2 : (Array.Length / 2) + 1;
+                int[] rightArr = new int[rightArrLength];
+
+                for (int i = 0; i < leftArr.Length; i++)
+                {
+                    leftArr[i] = Array[i];
+                }
+                for (int i = 0; i < rightArr.Length; i++)
+                {
+                    rightArr[i] = Array[leftArr.Length + i];
+                }
+
+                rightArr = MergeSort(rightArr);
+                leftArr = MergeSort(leftArr);
+
+                return Merge(leftArr, rightArr);
             }
         }
 
@@ -324,6 +432,25 @@ namespace AlgorithmsBar
             }
         }
 
+        private void QuickRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (quickRadio.Checked == true)
+            {
+                algorithmName.Text = "Quick sort";
+                complexity.Text = "The worst time - O(n²), \n the best time - O(n log n)\n average time - O(n log n)";
+                currentSortAlgorithm = Algorithm.QuickSort;
+            }
+        }
+
+        private void MergeRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mergeRadio.Checked == true)
+            {
+                algorithmName.Text = "Merge sort";
+                complexity.Text = "The worst time - O(n log2 n), \n the best time - O(n log2 n)\n average time - O(n log2 n)";
+                currentSortAlgorithm = Algorithm.MergeSort;
+            }
+        }
 
     }
 
