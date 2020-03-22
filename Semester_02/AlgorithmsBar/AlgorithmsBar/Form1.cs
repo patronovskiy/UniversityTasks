@@ -209,6 +209,10 @@ namespace AlgorithmsBar
                     visualizationTextBox.Text = visualizationText;
                     break;
                 case Algorithm.QuickSort:
+                    sortedIntArray = new int[initialIntArray.Length];
+                    initialIntArray.CopyTo(sortedIntArray, 0);
+                    QuickSort(sortedIntArray, 0, sortedIntArray.Length - 1);
+                    break;
                 default:
                     sortedIntArray = InsertionSort(initialIntArray, initialIntArray.Length);
                     visualizationTextBox.Text = visualizationText;
@@ -397,6 +401,42 @@ namespace AlgorithmsBar
 
                 return Merge(leftArr, rightArr);
             }
+        }
+
+        private static void QuickSort(int[] Array, int start, int end)
+        {
+            if (start >= end)
+            {
+                return;
+            }
+            else
+            {
+                int pivot = getParts(Array, start, end);
+                QuickSort(Array, start, pivot - 1);
+                QuickSort(Array, pivot + 1, end);
+            }
+        }
+
+        private static int getParts(int[] Array, int start, int end)
+        {
+            int wall = start;
+            Console.Write("Array before: ");
+            foreach (int num in Array)
+            {
+                Console.Write(num + " ");
+            }
+            Console.WriteLine();
+            for (int i = start; i <= end; i++)
+            {
+                if (Array[i] <= Array[end])
+                {
+                    int swap = Array[wall];
+                    Array[wall] = Array[i];
+                    Array[i] = swap;
+                    wall++;
+                }
+            }
+            return wall - 1;
         }
 
 
