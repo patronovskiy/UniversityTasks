@@ -55,12 +55,12 @@
             this.beforeArrayGroup = new System.Windows.Forms.GroupBox();
             this.beforeArrayTextBox = new System.Windows.Forms.TextBox();
             this.algorithmsGroup = new System.Windows.Forms.GroupBox();
+            this.quickRadio = new System.Windows.Forms.RadioButton();
+            this.mergeRadio = new System.Windows.Forms.RadioButton();
             this.shellRadio = new System.Windows.Forms.RadioButton();
             this.bubbleRadio = new System.Windows.Forms.RadioButton();
             this.insertionRadio = new System.Windows.Forms.RadioButton();
             this.serviceTab = new System.Windows.Forms.TabPage();
-            this.mergeRadio = new System.Windows.Forms.RadioButton();
-            this.quickRadio = new System.Windows.Forms.RadioButton();
             this.tabs.SuspendLayout();
             this.algorithmsTab.SuspendLayout();
             this.visualisationGroup.SuspendLayout();
@@ -140,6 +140,9 @@
             this.descriptionTextBox.ReadOnly = true;
             this.descriptionTextBox.Size = new System.Drawing.Size(318, 190);
             this.descriptionTextBox.TabIndex = 5;
+            this.descriptionTextBox.Text = "Алгоритм сортировки, в котором элементы входной последовательности просматриваютс" +
+    "я по одному, и каждый новый поступивший элемент размещается в подходящее место с" +
+    "реди ранее упорядоченных элементов";
             // 
             // descriptionLabel
             // 
@@ -345,6 +348,33 @@
             this.algorithmsGroup.TabStop = false;
             this.algorithmsGroup.Text = "Algorithms";
             // 
+            // quickRadio
+            // 
+            this.quickRadio.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.quickRadio.AllowDrop = true;
+            this.quickRadio.AutoSize = true;
+            this.quickRadio.Location = new System.Drawing.Point(6, 146);
+            this.quickRadio.Name = "quickRadio";
+            this.quickRadio.Size = new System.Drawing.Size(226, 21);
+            this.quickRadio.TabIndex = 4;
+            this.quickRadio.TabStop = true;
+            this.quickRadio.Text = "Quick sort (быстрая сортировка)";
+            this.quickRadio.UseCompatibleTextRendering = true;
+            this.quickRadio.UseVisualStyleBackColor = true;
+            // 
+            // mergeRadio
+            // 
+            this.mergeRadio.AllowDrop = true;
+            this.mergeRadio.AutoSize = true;
+            this.mergeRadio.Location = new System.Drawing.Point(6, 119);
+            this.mergeRadio.Name = "mergeRadio";
+            this.mergeRadio.Size = new System.Drawing.Size(238, 21);
+            this.mergeRadio.TabIndex = 3;
+            this.mergeRadio.TabStop = true;
+            this.mergeRadio.Text = "Merge sort (сортировка слиянием)";
+            this.mergeRadio.UseCompatibleTextRendering = true;
+            this.mergeRadio.UseVisualStyleBackColor = true;
+            // 
             // shellRadio
             // 
             this.shellRadio.AllowDrop = true;
@@ -390,33 +420,6 @@
             this.serviceTab.TabIndex = 1;
             this.serviceTab.Text = "Service";
             this.serviceTab.UseVisualStyleBackColor = true;
-            // 
-            // mergeRadio
-            // 
-            this.mergeRadio.AllowDrop = true;
-            this.mergeRadio.AutoSize = true;
-            this.mergeRadio.Location = new System.Drawing.Point(6, 119);
-            this.mergeRadio.Name = "mergeRadio";
-            this.mergeRadio.Size = new System.Drawing.Size(238, 21);
-            this.mergeRadio.TabIndex = 3;
-            this.mergeRadio.TabStop = true;
-            this.mergeRadio.Text = "Merge sort (сортировка слиянием)";
-            this.mergeRadio.UseCompatibleTextRendering = true;
-            this.mergeRadio.UseVisualStyleBackColor = true;
-            // 
-            // quickRadio
-            // 
-            this.quickRadio.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.quickRadio.AllowDrop = true;
-            this.quickRadio.AutoSize = true;
-            this.quickRadio.Location = new System.Drawing.Point(6, 146);
-            this.quickRadio.Name = "quickRadio";
-            this.quickRadio.Size = new System.Drawing.Size(226, 21);
-            this.quickRadio.TabIndex = 4;
-            this.quickRadio.TabStop = true;
-            this.quickRadio.Text = "Quick sort (быстрая сортировка)";
-            this.quickRadio.UseCompatibleTextRendering = true;
-            this.quickRadio.UseVisualStyleBackColor = true;
             // 
             // algorithmBar
             // 

@@ -257,6 +257,12 @@ namespace AlgorithmsBar
             } else if (shellRadio.Checked == true) {
                 return Algorithm.ShellSort;
 
+            } else if(quickRadio.Checked == true)
+            {
+                return Algorithm.QuickSort;
+            } else if (mergeRadio.Checked == true)
+            {
+                return Algorithm.MergeSort;
             } else
             {
                 //default algorithm is insertion sort
@@ -307,6 +313,7 @@ namespace AlgorithmsBar
                                 visualizationText += num + " ";
                             }
                             visualizationText += "\n-->\n";
+
                         }
                     }
                 }
@@ -449,6 +456,9 @@ namespace AlgorithmsBar
                 algorithmName.Text = "Shell sort";
                 complexity.Text = "The worst time - O(n²), \n the best time - O(n log² n)";
                 currentSortAlgorithm = Algorithm.ShellSort;
+                descriptionTextBox.Text = "Сортировка Шелла (англ. Shell sort) — алгоритм сортировки, являющийся усовершенствованным вариантом сортировки вставками. " +
+                    "Идея метода Шелла состоит в сравнении элементов, стоящих не только рядом, но и на определённом расстоянии друг от друга. " +
+                    "Иными словами — это сортировка вставками с предварительными «грубыми» проходами.";
             }
         }
 
@@ -459,6 +469,10 @@ namespace AlgorithmsBar
                 algorithmName.Text = "Bubble sort";
                 complexity.Text = "O(n²)";
                 currentSortAlgorithm = Algorithm.BubbleSort;
+                descriptionTextBox.Text = "Алгоритм состоит из повторяющихся проходов по сортируемому массиву. " +
+                    "За каждый проход элементы последовательно сравниваются попарно и, если порядок в паре неверный, " +
+                    "выполняется обмен элементов. Проходы по массиву повторяются N-1 раз или до тех пор, " +
+                    "пока на очередном проходе не окажется, что обмены больше не нужны";
             }
         }
 
@@ -468,6 +482,10 @@ namespace AlgorithmsBar
             {
                 algorithmName.Text = "Insertion sort";
                 complexity.Text = "O(n²)";
+                
+                descriptionTextBox.Text = "Алгоритм сортировки, в котором элементы " +
+                    "входной последовательности просматриваются по одному, и каждый новый " +
+                    "поступивший элемент размещается в подходящее место среди ранее упорядоченных элементов";
                 currentSortAlgorithm = Algorithm.InsertionSort;
             }
         }
@@ -479,6 +497,12 @@ namespace AlgorithmsBar
                 algorithmName.Text = "Quick sort";
                 complexity.Text = "The worst time - O(n²), \n the best time - O(n log n)\n average time - O(n log n)";
                 currentSortAlgorithm = Algorithm.QuickSort;
+                descriptionTextBox.Text = "Выбрать из массива опорный элемент. " +
+                    "Сравнить все остальные элементы с опорным и переставить их в массиве так, " +
+                    "чтобы разбить массив на три непрерывных отрезка, следующих друг за другом: " +
+                    "«элементы меньшие опорного», «равные» и «большие». " +
+                    "Для отрезков выполнить рекурсивно ту же последовательность операций, " +
+                    "если длина отрезка больше единицы.";
             }
         }
 
@@ -489,6 +513,9 @@ namespace AlgorithmsBar
                 algorithmName.Text = "Merge sort";
                 complexity.Text = "The worst time - O(n log2 n), \n the best time - O(n log2 n)\n average time - O(n log2 n)";
                 currentSortAlgorithm = Algorithm.MergeSort;
+                descriptionTextBox.Text = "Сортируемый массив разбивается на две части примерно одинакового размера." +
+                    "Каждая из получившихся частей сортируется отдельно, например — тем же самым алгоритмом. " +
+                    "Два упорядоченных массива половинного размера соединяются в один.";
             }
         }
 
