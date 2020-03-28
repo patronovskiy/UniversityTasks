@@ -394,7 +394,7 @@ namespace AlgorithmsBar
             int pointer2 = 0;
             int[] mergedArr = new int[arr1.Length + arr2.Length];
 
-            visualizationText += "Getted arrays:     1)";
+            visualizationText += "Passed arrays:     1)";
             foreach (int num in arr1)
             {
                 visualizationText += num + " ";

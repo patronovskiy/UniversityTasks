@@ -113,6 +113,7 @@
             this.visualizationTextBox.Multiline = true;
             this.visualizationTextBox.Name = "visualizationTextBox";
             this.visualizationTextBox.ReadOnly = true;
+            this.visualizationTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.visualizationTextBox.ShortcutsEnabled = false;
             this.visualizationTextBox.Size = new System.Drawing.Size(325, 352);
             this.visualizationTextBox.TabIndex = 1;
@@ -138,6 +139,7 @@
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
             this.descriptionTextBox.ReadOnly = true;
+            this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.descriptionTextBox.Size = new System.Drawing.Size(318, 190);
             this.descriptionTextBox.TabIndex = 5;
             this.descriptionTextBox.Text = "Алгоритм сортировки, в котором элементы входной последовательности просматриваютс" +
@@ -207,6 +209,7 @@
             this.afterArrayTextBox.Location = new System.Drawing.Point(14, 21);
             this.afterArrayTextBox.Multiline = true;
             this.afterArrayTextBox.Name = "afterArrayTextBox";
+            this.afterArrayTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.afterArrayTextBox.Size = new System.Drawing.Size(325, 270);
             this.afterArrayTextBox.TabIndex = 1;
             // 
@@ -331,6 +334,7 @@
             this.beforeArrayTextBox.Location = new System.Drawing.Point(14, 25);
             this.beforeArrayTextBox.Multiline = true;
             this.beforeArrayTextBox.Name = "beforeArrayTextBox";
+            this.beforeArrayTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.beforeArrayTextBox.Size = new System.Drawing.Size(325, 270);
             this.beforeArrayTextBox.TabIndex = 0;
             // 
