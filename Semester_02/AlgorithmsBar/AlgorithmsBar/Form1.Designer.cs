@@ -278,6 +278,8 @@
             // noDownloadCheckbox
             // 
             this.noDownloadCheckbox.AutoSize = true;
+            this.noDownloadCheckbox.Checked = true;
+            this.noDownloadCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.noDownloadCheckbox.Location = new System.Drawing.Point(9, 84);
             this.noDownloadCheckbox.Name = "noDownloadCheckbox";
             this.noDownloadCheckbox.Size = new System.Drawing.Size(112, 21);
