@@ -212,6 +212,7 @@ namespace AlgorithmsBar
                     sortedIntArray = new int[initialIntArray.Length];
                     initialIntArray.CopyTo(sortedIntArray, 0);
                     QuickSort(sortedIntArray, 0, sortedIntArray.Length - 1);
+                    visualizationTextBox.Text = visualizationText;
                     break;
                 default:
                     sortedIntArray = InsertionSort(initialIntArray, initialIntArray.Length);
@@ -253,7 +254,6 @@ namespace AlgorithmsBar
             if (bubbleRadio.Checked == true)
             {
                 return Algorithm.BubbleSort;
-
             } else if (shellRadio.Checked == true) {
                 return Algorithm.ShellSort;
 
@@ -266,7 +266,7 @@ namespace AlgorithmsBar
             } else
             {
                 //default algorithm is insertion sort
-                return Algorithm.InsertionSort;
+                return Algorithm.InsertionSort; 
             }
         }
 
@@ -275,6 +275,13 @@ namespace AlgorithmsBar
         //SORT METHODS
         private static int[] InsertionSort(int[] Array, int ArraySize)
         {
+            //для отображения шагов сортировки в окне визуализации
+            foreach (int num in Array)
+            {
+                visualizationText += num + " ";
+            }
+            visualizationText += " --> ";
+
             for (int i = 1; i < ArraySize; i++)
             {
                 int j = i;
@@ -285,13 +292,28 @@ namespace AlgorithmsBar
                     Array[j] = temp;
                     j--;
                 }
+
+                foreach (int num in Array)
+                {
+                    visualizationText += num + " ";
+                }
+                visualizationText += "\n-->\n";
             }
+
+            visualizationText = visualizationText.Substring(0, visualizationText.Length - 4);
+
             return Array;
         }
 
 
         private static int[] ShellSort(int[] Array, int ArraySize)
         {
+            foreach (int num in Array)
+            {
+                visualizationText += num + " ";
+            }
+            visualizationText += " --> ";
+
             int step = ArraySize / 2;
             while (step > 0)
             {
@@ -313,17 +335,25 @@ namespace AlgorithmsBar
                                 visualizationText += num + " ";
                             }
                             visualizationText += "\n-->\n";
-
                         }
                     }
                 }
                 step /= 2;
             }
+
+            visualizationText = visualizationText.Substring(0, visualizationText.Length - 4);
+
             return Array;
         }
 
         private static int[] BubbleSort(int[] Array, int ArraySize)
         {
+            foreach (int num in Array)
+            {
+                visualizationText += num + " ";
+            }
+            visualizationText += " --> ";
+
             if (ArraySize < 2)
             {
                 return Array;
@@ -343,7 +373,15 @@ namespace AlgorithmsBar
                             isArraySorted = false;
                         }
                     }
+                    foreach (int num in Array)
+                    {
+                        visualizationText += num + " ";
+                    }
+                    visualizationText += " --> ";
                 }
+
+                visualizationText = visualizationText.Substring(0, visualizationText.Length - 4);
+
                 return Array;
             }
         }
@@ -351,9 +389,22 @@ namespace AlgorithmsBar
         private static int[] Merge(int[] arr1, int[] arr2)
         //должны передаваться 2 упорядоченных массива
         {
+
             int pointer1 = 0;
             int pointer2 = 0;
             int[] mergedArr = new int[arr1.Length + arr2.Length];
+
+            visualizationText += "Getted arrays:     1)";
+            foreach (int num in arr1)
+            {
+                visualizationText += num + " ";
+            }
+            visualizationText += "  2)";
+            foreach (int num in arr2)
+            {
+                visualizationText += num + " ";
+            }
+            visualizationText += " -- >";
 
             for (int i = 0; i < mergedArr.Length; i++)
             {
@@ -377,12 +428,21 @@ namespace AlgorithmsBar
                     mergedArr[i] = arr2[pointer2];
                     pointer2++;
                 }
+                
             }
+
+            visualizationText += "  Merged array: ";
+            foreach (int num in mergedArr)
+            {
+                visualizationText += num + " ";
+            }
+
             return mergedArr;
         }
 
         private static int[] MergeSort(int[] Array)
         {
+
             if (Array.Length < 2)
             {
                 return Array;
@@ -412,6 +472,12 @@ namespace AlgorithmsBar
 
         private static void QuickSort(int[] Array, int start, int end)
         {
+            foreach (int num in Array)
+            {
+                visualizationText += num + " ";
+            }
+            visualizationText += " --> ";
+
             if (start >= end)
             {
                 return;
@@ -422,17 +488,20 @@ namespace AlgorithmsBar
                 QuickSort(Array, start, pivot - 1);
                 QuickSort(Array, pivot + 1, end);
             }
+
+            visualizationText = visualizationText.Substring(0, visualizationText.Length - 2);
         }
 
         private static int getParts(int[] Array, int start, int end)
         {
             int wall = start;
-            Console.Write("Array before: ");
+
             foreach (int num in Array)
             {
-                Console.Write(num + " ");
+                visualizationText += num + " ";
             }
-            Console.WriteLine();
+            visualizationText += " --> ";
+
             for (int i = start; i <= end; i++)
             {
                 if (Array[i] <= Array[end])
