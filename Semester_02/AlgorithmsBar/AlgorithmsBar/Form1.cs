@@ -180,7 +180,7 @@ namespace AlgorithmsBar
                 return intArray;
             } catch
             {
-                MessageBox.Show("You must input or download array");
+                MessageBox.Show("You must input or download array of integers");
                 int[] intArray = { };
                 return intArray;
             }
@@ -212,6 +212,7 @@ namespace AlgorithmsBar
                     sortedIntArray = new int[initialIntArray.Length];
                     initialIntArray.CopyTo(sortedIntArray, 0);
                     QuickSort(sortedIntArray, 0, sortedIntArray.Length - 1);
+                    visualizationText = visualizationText.Substring(0, visualizationText.Length - 4);
                     visualizationTextBox.Text = visualizationText;
                     break;
                 default:
@@ -489,7 +490,6 @@ namespace AlgorithmsBar
                 QuickSort(Array, pivot + 1, end);
             }
 
-            visualizationText = visualizationText.Substring(0, visualizationText.Length - 2);
         }
 
         private static int getParts(int[] Array, int start, int end)
