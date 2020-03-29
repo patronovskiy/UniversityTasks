@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
@@ -33,6 +26,9 @@ namespace AlgorithmsBar
 
             //sort array
             sortButton.Click += SortButton_Click;
+
+            //link to github
+            linkLabel.LinkClicked += LinkLabel_LinkClicked;
         }
 
 
@@ -587,6 +583,15 @@ namespace AlgorithmsBar
                     "Два упорядоченных массива половинного размера соединяются в один.";
             }
         }
+
+
+        //LINK TO GITHUB
+        private void LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabel.LinkVisited = true;
+            System.Diagnostics.Process.Start("https://github.com/patronovskiy/UniversityTasks/tree/master/Semester_02/AlgorithmsBar");
+        }
+
 
     }
 

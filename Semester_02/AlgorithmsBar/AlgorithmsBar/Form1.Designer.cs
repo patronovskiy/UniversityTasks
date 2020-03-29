@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(algorithmBar));
             this.tabs = new System.Windows.Forms.TabControl();
             this.algorithmsTab = new System.Windows.Forms.TabPage();
             this.visualisationGroup = new System.Windows.Forms.GroupBox();
@@ -61,6 +62,12 @@
             this.bubbleRadio = new System.Windows.Forms.RadioButton();
             this.insertionRadio = new System.Windows.Forms.RadioButton();
             this.serviceTab = new System.Windows.Forms.TabPage();
+            this.aboutTab = new System.Windows.Forms.TabPage();
+            this.developerGroup = new System.Windows.Forms.GroupBox();
+            this.instructionGroup = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.developerLabel = new System.Windows.Forms.Label();
+            this.linkLabel = new System.Windows.Forms.LinkLabel();
             this.tabs.SuspendLayout();
             this.algorithmsTab.SuspendLayout();
             this.visualisationGroup.SuspendLayout();
@@ -69,12 +76,16 @@
             this.arrayGroup.SuspendLayout();
             this.beforeArrayGroup.SuspendLayout();
             this.algorithmsGroup.SuspendLayout();
+            this.aboutTab.SuspendLayout();
+            this.developerGroup.SuspendLayout();
+            this.instructionGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabs
             // 
             this.tabs.Controls.Add(this.algorithmsTab);
             this.tabs.Controls.Add(this.serviceTab);
+            this.tabs.Controls.Add(this.aboutTab);
             this.tabs.Location = new System.Drawing.Point(1, 2);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
@@ -427,6 +438,69 @@
             this.serviceTab.Text = "Service";
             this.serviceTab.UseVisualStyleBackColor = true;
             // 
+            // aboutTab
+            // 
+            this.aboutTab.Controls.Add(this.instructionGroup);
+            this.aboutTab.Controls.Add(this.developerGroup);
+            this.aboutTab.Location = new System.Drawing.Point(4, 25);
+            this.aboutTab.Name = "aboutTab";
+            this.aboutTab.Size = new System.Drawing.Size(1072, 636);
+            this.aboutTab.TabIndex = 2;
+            this.aboutTab.Text = "About programm";
+            this.aboutTab.UseVisualStyleBackColor = true;
+            // 
+            // developerGroup
+            // 
+            this.developerGroup.Controls.Add(this.linkLabel);
+            this.developerGroup.Controls.Add(this.developerLabel);
+            this.developerGroup.Location = new System.Drawing.Point(7, 3);
+            this.developerGroup.Name = "developerGroup";
+            this.developerGroup.Size = new System.Drawing.Size(1062, 80);
+            this.developerGroup.TabIndex = 0;
+            this.developerGroup.TabStop = false;
+            this.developerGroup.Text = "Developer";
+            // 
+            // instructionGroup
+            // 
+            this.instructionGroup.Controls.Add(this.textBox1);
+            this.instructionGroup.Location = new System.Drawing.Point(7, 89);
+            this.instructionGroup.Name = "instructionGroup";
+            this.instructionGroup.Size = new System.Drawing.Size(1062, 544);
+            this.instructionGroup.TabIndex = 1;
+            this.instructionGroup.TabStop = false;
+            this.instructionGroup.Text = "How to use it";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(9, 21);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(1047, 517);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.Text = resources.GetString("textBox1.Text");
+            // 
+            // developerLabel
+            // 
+            this.developerLabel.AutoSize = true;
+            this.developerLabel.Location = new System.Drawing.Point(6, 29);
+            this.developerLabel.Name = "developerLabel";
+            this.developerLabel.Size = new System.Drawing.Size(751, 17);
+            this.developerLabel.TabIndex = 0;
+            this.developerLabel.Text = "Данная программа была разработана студентом ИРИТ РТФ УрФУ группы РИВ-190027у Март" +
+    "юшовой Галиной.";
+            // 
+            // linkLabel
+            // 
+            this.linkLabel.AutoSize = true;
+            this.linkLabel.Location = new System.Drawing.Point(773, 29);
+            this.linkLabel.Name = "linkLabel";
+            this.linkLabel.Size = new System.Drawing.Size(137, 17);
+            this.linkLabel.TabIndex = 1;
+            this.linkLabel.TabStop = true;
+            this.linkLabel.Text = "Проект на Гитхабе.";
+            // 
             // algorithmBar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -450,6 +524,11 @@
             this.beforeArrayGroup.PerformLayout();
             this.algorithmsGroup.ResumeLayout(false);
             this.algorithmsGroup.PerformLayout();
+            this.aboutTab.ResumeLayout(false);
+            this.developerGroup.ResumeLayout(false);
+            this.developerGroup.PerformLayout();
+            this.instructionGroup.ResumeLayout(false);
+            this.instructionGroup.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -489,6 +568,12 @@
         private System.Windows.Forms.TextBox visualizationTextBox;
         private System.Windows.Forms.RadioButton mergeRadio;
         private System.Windows.Forms.RadioButton quickRadio;
+        private System.Windows.Forms.TabPage aboutTab;
+        private System.Windows.Forms.GroupBox instructionGroup;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.GroupBox developerGroup;
+        private System.Windows.Forms.LinkLabel linkLabel;
+        private System.Windows.Forms.Label developerLabel;
     }
 }
 
