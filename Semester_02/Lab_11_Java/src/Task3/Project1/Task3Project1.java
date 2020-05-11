@@ -27,7 +27,7 @@ public class Task3Project1 {
                 addFilms(in, films);
             }
 
-            //вывести все фильмы из списка  TODO
+            //вывести все фильмы из списка
             System.out.println("Все фильмы в списке: ");
             for (Film film : films) {
                 System.out.println(film.toString());

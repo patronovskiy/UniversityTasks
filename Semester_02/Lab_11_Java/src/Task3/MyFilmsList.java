@@ -1,10 +1,17 @@
 package Task3;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MyFilmsList {
+public class MyFilmsList implements Serializable {
+    public ArrayList<Film> myFilms;
+
+    public void initializeEmpty() {
+        myFilms = new ArrayList();
+    }
+
     public ArrayList<Film> initialize() {
-        ArrayList<Film> myFilms = new ArrayList();
+        myFilms = new ArrayList();
 
         myFilms.add(new Film(
                 "Властелин колец: Возвращение короля",
@@ -31,5 +38,9 @@ public class MyFilmsList {
                 0));
 
         return myFilms;
+    }
+
+    public void addFilm(Film film) {
+        myFilms.add(film);
     }
 }

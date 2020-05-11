@@ -1,6 +1,8 @@
 package Task3;
 
-public class Film {
+import java.io.Serializable;
+
+public class Film implements Serializable {
     String title;
     int year;
     String country;
@@ -11,6 +13,10 @@ public class Film {
         this.year = year;
         this.country = country;
         this.cost = cost;
+    }
+
+    public String getCountry() {
+        return this.country;
     }
 
     @Override
