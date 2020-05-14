@@ -1,4 +1,4 @@
-package java;
+package logic;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,13 +14,13 @@ public class Parser  {
 
     public void parseHTML(String html, boolean isURL) throws IOException {
         if (isURL) {
-            this.document = Jsoup.connect("http://jsoup.org").get();
+            this.document = Jsoup.connect(html).get();
         } else {
             this.document = Jsoup.parse(html);
         }
     }
 
-    public String checkTitle() {
+    public String checkTitle(String ... keyWords) {
         String result ="";
 
         Boolean isExisting;
@@ -39,7 +39,7 @@ public class Parser  {
             //проверка того, что это единственный элемент на странице
             if (pageTitle.size() == 1) {
                 isUnique = true;
-                result += "\nЭлемент title уникален на странице - ОК";
+                result += "\nЭлемент title уникален на странице - ОК\n";
             } else {
                 isUnique = false;
                 result += "\nЭлемент title не уникален на странице";
@@ -50,20 +50,36 @@ public class Parser  {
             result += "Содержимое title: " + titleValue;
             if (titleValue.length() <= 60) {
                 isLengthOk = true;
-                result += "\nДлина title " + titleValue.length() + " символов - ОК";
+                result += "\nДлина title " + titleValue.length() + " символов - ОК\n";
             } else if (titleValue.length() == 0) {
                 isLengthOk = false;
-                result += "\ntitle не содержит текста";
+                result += "\ntitle не содержит текста\n";
             } else {
                 isLengthOk = false;
                 result += "\nДлина title превышает 60 символов. " +
-                        "Постарайтесь уместить наиболее важную информацию в 60 символов";
+                        "Постарайтесь уместить наиболее важную информацию в 60 символов\n";
             }
 
-            //проверка по ключевым словам TODO
+            String[] titleWords = titleValue.split(" ");
+            boolean isKeysInTitle = false;
+            int keysInTitle = 0;
+            for (String word : titleWords) {
+                for (String key : keyWords) {
+                    if (WordsHandler.handle(word).toLowerCase().equals(key.toLowerCase())) {
+                        isKeysInTitle = true;
+                        keysInTitle ++;
+                    }
+                }
+            }
+            if (isKeysInTitle) {
+                result += "title содержит ключевые слова (количество слов: " + keysInTitle + ") - ОК\n";
+            } else {
+                result += "title не содержит ключевых слов";
+            }
+
         }
 
-        System.out.println(result); //убрать TODO
+        System.out.println("\ntitle:" + result); //убрать TODO
         return result;
     }
 }
