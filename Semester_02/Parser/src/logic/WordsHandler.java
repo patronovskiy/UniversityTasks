@@ -14,6 +14,8 @@ public class WordsHandler {
                     return word;
                 }
             }
+        } else if (word.length() == 0) {
+            return word;
         }
 
         boolean isAllMarksDeleted = false;

@@ -9,12 +9,14 @@ public class Main {
                 "  <html lang=\"ru\">\n" +
                 "    <head>\n" +
                 "      <meta charset=\"utf-8\">\n" +
+                "<meta name=\"description\" content=\"ааа мир\"" +
                 "      <title>Привет, мир!!!!!</title>\n" +
                 "    </head>\n" +
                 "    <body>\n" +
                 "      <h1>Привет, мир!</h1>\n" +
                 "      <p>Это веб-страница.</p>\n" +
                 "<div><h2></h2><h4></h4></div>"+ "<h3></h3>" +
+                "<img alt=\"alt\">" +
                 "    </body>\n" +
                 "  </html>\n";
         String[] keys = {"alt", "SeO", "aaaa", "мир"};

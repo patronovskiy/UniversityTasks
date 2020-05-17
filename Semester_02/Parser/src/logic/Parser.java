@@ -39,6 +39,11 @@ public class Parser  {
     Boolean isDescriptionLengthOk = false;
     Boolean getIsDescriptionIncludeKeys = false;
 
+    //<img alt="альтернативный текст">
+    Boolean areImagesExist = false;
+    Boolean areAllImagesAlted = false;
+
+
     public void setKeys(String ... keys) {
         this.keyWords = keys;
     }
@@ -48,6 +53,7 @@ public class Parser  {
         checkHeaders();
         checkFormattingTags();
         checkDescription();
+        checkImgAlts();
     }
 
     public void parseHTML(String html, boolean isURL) throws IOException {
@@ -290,7 +296,7 @@ public class Parser  {
     public String checkDescription() {
         //по умолчанию описания нет
         String result = "Страница не содержит описания в мета-теге <meta name=\"description\">." +
-                "Рекомендуется добавить тег <meta name=\"description\" content=\"описание в 70-200 символов\">";
+                "\nРекомендуется добавить тег <meta name=\"description\" content=\"описание в 70-200 символов\">";
 
         Elements elementsWithNameDescription = this.document.getElementsByAttributeValue("name", "description");
         int metaDescriptions = 0;
@@ -300,19 +306,53 @@ public class Parser  {
             }
         }
         if (metaDescriptions == 1) {
-            result = "\nСтраница содержит описание в мета-теге <meta name=\"description\"> - OK";
+            result = "\nСтраница содержит мета-тег <meta name=\"description\" content=\"\">, " +
+                    "\nно не содержит описания в атрибуте content";
 
             Element metaDescription = elementsWithNameDescription.first();
             //извлекаем текст описания
-            String description = metaDescription.attr("content");
-            result += checkLength(metaDescription, 70, 200, isDescriptionLengthOk);
-            if (keyWords != null) {
-                result += getIncludedKeys(metaDescription, getIsDescriptionIncludeKeys);
+            String description = metaDescription.attributes().get("content");
+            if (description.length() > 0) {
+                result = "\nСтраница содержит описание в мета-теге <meta name=\"description\" content=\"описание\"> - OK";
+                result += "\nСодержание description:\n\t" + description;
+                result += checkLength(description, "description", 70, 200, isDescriptionLengthOk);
+                if (keyWords != null) {
+                    result += getIncludedKeys(description, "description", getIsDescriptionIncludeKeys);
+                }
             }
 
         } else if (metaDescriptions > 1) {
             result = "\nСтраница содержит более 1 мета-тега <meta name=\"description\">." +
                     "Этот тег должен быть единственным на странице.";
+        }
+        System.out.println(result);
+        return result;
+    }
+
+    //проверка наличия атрибута alt  тегов изображений img
+    public String checkImgAlts() {
+        areAllImagesAlted = false;
+        String result = "На странице нет изображений в тегах img";
+
+        Elements images = this.document.select("img");
+        if(images.size() > 0) {
+            areImagesExist = true;
+            result = "На странице " + images.size() + " тегов img (изображений)";
+            int altCount = 0;
+
+            for(Element img : images) {
+                if(img.attributes().get("alt").length() != 0) {
+                    altCount++;
+                }
+            }
+            if (altCount == images.size()) {
+                areAllImagesAlted = true;
+                result += "\nВсе изображения img имеют альтернативный текст alt - ОК";
+            } else {
+                areAllImagesAlted = false;
+                result += "\nНе все изображения img имеют альтернативный текст alt. " +
+                        "Необходимо добавить недостающие аттрибуты alt";
+            }
         }
         System.out.println(result);
         return result;
@@ -376,6 +416,27 @@ public class Parser  {
         return result;
     }
 
+    //проверка вхождения ключевых слов в текст строки
+    public String getIncludedKeys(String elementText, String elementName, Boolean isIncludeKeys) {
+        String result = elementName + " не содержит ключевых слов\n";
+        isIncludeKeys = false;
+        String[] elementWords = elementText.split(" ");
+        int keysInElement = 0;
+
+        for (String word : elementWords) {
+            for (String key : keyWords) {
+                if (WordsHandler.handle(word).toLowerCase().equals(key.toLowerCase())) {
+                    isIncludeKeys = true;
+                    keysInElement ++;
+                }
+            }
+        }
+        if (isIncludeKeys) {
+            result = elementName + " содержит ключевые слова (количество слов: " + keysInElement + ") - ОК\n";
+        }
+        return result;
+    }
+
     //проверка длины содержимого элемента
     public String checkLength(Element element, int minLength, int maxLength, Boolean isLengthOk) {
         String elementValue = element.text();
@@ -396,6 +457,24 @@ public class Parser  {
         return result;
     }
 
+    //проверка длины содержимого строки
+    public String checkLength(String elementValue, String elementName, int minLength, int maxLength, Boolean isLengthOk) {
+        //по умолчанию длина элемента меньше нормы
+        isLengthOk = false;
+        String result = "\nДлина " + elementName + " составляет " + elementValue.length() +
+                " символов - это меньше рекомендуемой длины\n";
+
+        //проверка длины
+        if (elementValue.length() >= minLength & elementValue.length() <= maxLength) {
+            isLengthOk = true;
+            result = "\nДлина " + elementName + " составляет "+ elementValue.length() + " символов - ОК\n";
+        } else if (elementValue.length() > maxLength ) {
+            isLengthOk = false;
+            result = "\nДлина " + elementName+ " составляет " + elementValue.length() +
+                    " и превышает рекомендуемую длину в" + maxLength +" символов";
+        }
+        return result;
+    }
 
 
 
