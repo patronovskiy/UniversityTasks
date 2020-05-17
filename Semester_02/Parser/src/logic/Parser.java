@@ -12,6 +12,9 @@ public class Parser  {
     //класс, определенный в библиотеке jsoup, является результатом парсинга DOM-дерева
     Document document;
 
+    //ключевые слова
+    String[] keyWords = null;
+
     //флаги состяния тегов
     //title
     Boolean isTitleExisting = false;
@@ -31,6 +34,21 @@ public class Parser  {
     //теги форматирования
     Boolean isFormattingTagsUsed = false;
 
+    //<meta name="description">
+    Boolean isMetsDescriptionUnique = false;
+    Boolean isDescriptionLengthOk = false;
+    Boolean getIsDescriptionIncludeKeys = false;
+
+    public void setKeys(String ... keys) {
+        this.keyWords = keys;
+    }
+
+    public void start() {
+        checkTitle();
+        checkHeaders();
+        checkFormattingTags();
+        checkDescription();
+    }
 
     public void parseHTML(String html, boolean isURL) throws IOException {
         if (isURL) {
@@ -40,7 +58,7 @@ public class Parser  {
         }
     }
 
-    public String checkTitle(String ... keyWords) {
+    public String checkTitle() {
         String result ="";
 
         Elements pageTitles = this.document.select("title");
@@ -68,7 +86,9 @@ public class Parser  {
             result += checkLength(title,0, 60, isTitleLengthOk);
 
             //проверка вхождения ключевых слов в title
-            result += getIncludedKeys(title, keyWords, isTitleIncludeKeys);
+            if (keyWords != null) {
+                result += getIncludedKeys(title, isTitleIncludeKeys);
+            }
         }
 
         System.out.println("\ntitle:" + result); //убрать TODO
@@ -76,7 +96,7 @@ public class Parser  {
     }
 
     //проверка заголовка первого уровня h1
-    public String checkHeaders(String ... keyWords) {
+    public String checkHeaders() {
         String result = "";
 
         //выбор всех заголовков первого уровня h1 на странице
@@ -107,7 +127,9 @@ public class Parser  {
             result += checkLength(header1, 0, 70, isHeader1LengthOk);
 
             //проверка вхождения ключевых слов в title
-            result += getIncludedKeys(header1, keyWords, isHeader1IncludeKeys);
+            if (keyWords != null) {
+                result += getIncludedKeys(header1, isHeader1IncludeKeys);
+            }
         }
 
         //проверка порядка следования заголовков
@@ -264,6 +286,38 @@ public class Parser  {
         return result;
     }
 
+    //проверка тега <meta name="description">
+    public String checkDescription() {
+        //по умолчанию описания нет
+        String result = "Страница не содержит описания в мета-теге <meta name=\"description\">." +
+                "Рекомендуется добавить тег <meta name=\"description\" content=\"описание в 70-200 символов\">";
+
+        Elements elementsWithNameDescription = this.document.getElementsByAttributeValue("name", "description");
+        int metaDescriptions = 0;
+        for (Element element : elementsWithNameDescription) {
+            if (element.normalName().equals("meta")) {
+                metaDescriptions ++;
+            }
+        }
+        if (metaDescriptions == 1) {
+            result = "\nСтраница содержит описание в мета-теге <meta name=\"description\"> - OK";
+
+            Element metaDescription = elementsWithNameDescription.first();
+            //извлекаем текст описания
+            String description = metaDescription.attr("content");
+            result += checkLength(metaDescription, 70, 200, isDescriptionLengthOk);
+            if (keyWords != null) {
+                result += getIncludedKeys(metaDescription, getIsDescriptionIncludeKeys);
+            }
+
+        } else if (metaDescriptions > 1) {
+            result = "\nСтраница содержит более 1 мета-тега <meta name=\"description\">." +
+                    "Этот тег должен быть единственным на странице.";
+        }
+        System.out.println(result);
+        return result;
+    }
+
 
     //проверка порядка следования заголовков
     //рекурсивный обход потомков элемента
@@ -302,14 +356,14 @@ public class Parser  {
     }
 
     //проверка вхождения ключевых слов в текст элемента
-    public String getIncludedKeys(Element element, String[] keys, Boolean isIncludeKeys) {
+    public String getIncludedKeys(Element element, Boolean isIncludeKeys) {
         String result = element.normalName() + " не содержит ключевых слов\n";
         isIncludeKeys = false;
         String[] elementWords = element.text().split(" ");
         int keysInElement = 0;
 
         for (String word : elementWords) {
-            for (String key : keys) {
+            for (String key : keyWords) {
                 if (WordsHandler.handle(word).toLowerCase().equals(key.toLowerCase())) {
                     isIncludeKeys = true;
                     keysInElement ++;

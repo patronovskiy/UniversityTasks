@@ -21,9 +21,9 @@ public class Main {
         try {
             Parser parser = new Parser();
             parser.parseHTML(debugHTML, false);
-            parser.checkTitle(keys);
-            parser.checkHeaders(keys);
-            parser.checkFormattingTags();
+            parser.setKeys(keys);
+            parser.start();
+
         } catch (IOException e) {
             System.out.println("IO err 1: " + e);
         }
