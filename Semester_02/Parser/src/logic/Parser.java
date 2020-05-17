@@ -12,6 +12,25 @@ public class Parser  {
     //класс, определенный в библиотеке jsoup, является результатом парсинга DOM-дерева
     Document document;
 
+    //флаги состяния тегов
+    //title
+    Boolean isTitleExisting = false;
+    Boolean isTitleUnique = false;
+    Boolean isTitleLengthOk = false;
+    Boolean isTitleIncludeKeys = false;
+
+    //h1
+    Boolean isHeader1Existing = false;
+    Boolean isHeader1Unique = false;
+    Boolean isHeader1LengthOk = false;
+    Boolean isHeader1IncludeKeys = false;
+
+    //h2-h6
+    Boolean isHeadersOrderOk = true;
+
+    //теги форматирования
+    Boolean isFormattingTagsUsed = false;
+
 
     public void parseHTML(String html, boolean isURL) throws IOException {
         if (isURL) {
@@ -24,26 +43,21 @@ public class Parser  {
     public String checkTitle(String ... keyWords) {
         String result ="";
 
-        Boolean isExisting = false;
-        Boolean isUnique = false;
-        Boolean isLengthOk = false;
-        Boolean isIncludeKeys = false;
-
         Elements pageTitles = this.document.select("title");
 
         //проверка, что title существует
         if (pageTitles.size() == 0) {
-            isExisting = false;
+            isTitleExisting = false;
             result = "Элемента title нет на странице";
         } else {
-            isExisting = true;
+            isTitleExisting = true;
 
             //проверка того, что это единственный элемент на странице
             if (pageTitles.size() == 1) {
-                isUnique = true;
+                isTitleUnique = true;
                 result += "\nЭлемент title уникален на странице - ОК\n";
             } else {
-                isUnique = false;
+                isTitleUnique = false;
                 result += "\nЭлемент title не уникален на странице";
             }
 
@@ -51,10 +65,10 @@ public class Parser  {
             Element title = pageTitles.get(0);
             String titleValue = title.text();
             result += "Содержимое title:\n\t" + titleValue;
-            result += checkLength(title,0, 60, isLengthOk);
+            result += checkLength(title,0, 60, isTitleLengthOk);
 
             //проверка вхождения ключевых слов в title
-            result += getIncludedKeys(title, keyWords, isIncludeKeys);
+            result += getIncludedKeys(title, keyWords, isTitleIncludeKeys);
         }
 
         System.out.println("\ntitle:" + result); //убрать TODO
@@ -65,27 +79,21 @@ public class Parser  {
     public String checkHeaders(String ... keyWords) {
         String result = "";
 
-        Boolean isExisting = false;
-        Boolean isUnique = false;
-        Boolean isLengthOk = false;
-        Boolean isOrderOk = true;
-        Boolean isIncludeKeys = false;
-
         //выбор всех заголовков первого уровня h1 на странице
         Elements pageHeaders1 = this.document.select("h1");
         //проверка, что h1существует
         if (pageHeaders1.size() == 0) {
-            isExisting = false;
+            isHeader1Existing = false;
             result = "На странице нет заголовка первого уровня h1";
         } else {
-            isExisting = true;
+            isHeader1Existing = true;
 
             //проверка того, что h1 уникален на странице
             if (pageHeaders1.size() == 1) {
-                isUnique = true;
+                isHeader1Unique = true;
                 result += "\nЗаголовок первого уровня h1 уникален на странице - ОК\n";
             } else {
-                isUnique = false;
+                isHeader1Unique = false;
                 result += "\nЗаголовок первого уровня h1 не уникален на странице - " +
                         "этот заголовок должен быть единственным на странице";
             }
@@ -96,10 +104,10 @@ public class Parser  {
             result += "\nСодержимое заголовка h1:\n\t" + header1Value;
 
             //проверка длины содержимого h1
-            result += checkLength(header1, 0, 70, isLengthOk);
+            result += checkLength(header1, 0, 70, isHeader1LengthOk);
 
             //проверка вхождения ключевых слов в title
-            result += getIncludedKeys(header1, keyWords, isIncludeKeys);
+            result += getIncludedKeys(header1, keyWords, isHeader1IncludeKeys);
         }
 
         //проверка порядка следования заголовков
@@ -107,11 +115,11 @@ public class Parser  {
         String headersOrder = getHeaders(body);
 
         //проверка того, что h1 - первый заголовок
-        if (isUnique & headersOrder.charAt(0) == '1') {
-            isOrderOk = true;
+        if (isHeader1Unique & headersOrder.charAt(0) == '1') {
+            isHeadersOrderOk = true;
             result += "\nh1 - первый заголовок на странице - ОК\n";
-        } else if (isExisting){
-            isOrderOk = false;
+        } else if (isHeader1Existing){
+            isHeadersOrderOk = false;
             result += "\nh1 не является первым заголовком на странице";
         }
 
@@ -165,7 +173,7 @@ public class Parser  {
             } else {
                 headersProblem += "\n\tЗаголовок h2 появляется позже заголовка h3";
             }
-            isOrderOk = false;
+            isHeadersOrderOk = false;
 
         } else if (h3FirstIndex > h4FirstIndex) {
             if (h3FirstIndex == defaultValue) {
@@ -173,7 +181,7 @@ public class Parser  {
             } else {
                 headersProblem += "\n\tЗаголовок h3 появляется позже заголовка h4";
             }
-            isOrderOk = false;
+            isHeadersOrderOk = false;
 
         } else if (h4FirstIndex > h5FirstIndex) {
             if (h4FirstIndex == defaultValue) {
@@ -181,7 +189,7 @@ public class Parser  {
             } else {
                 headersProblem += "\n\tЗаголовок h4 появляется позже заголовка h5";
             }
-            isOrderOk = false;
+            isHeadersOrderOk = false;
 
         } else if (h5FirstIndex > h6FirstIndex) {
             if (h5FirstIndex == defaultValue) {
@@ -189,13 +197,67 @@ public class Parser  {
             } else {
                 headersProblem += "\n\tЗаголовок h5 появляется позже заголовка h6";
             }
-            isOrderOk = false;
+            isHeadersOrderOk = false;
         }
 
-        if (isOrderOk) {
+        if (isHeadersOrderOk) {
             result += "\nЗаголовки h2-h6 появляются в правильном порядке\n";
         } else {
             result += "\nНарушен порядок следования заголовков h2-h6: " + headersProblem;
+        }
+
+        System.out.println(result);
+        return result;
+    }
+
+    //проверка наличия тегов форматирования
+    public String checkFormattingTags() {
+        //по умолчанию тегов форматирования на странице нет
+        String result = "Страница не содержит тегов форматирования. " +
+                "Рекомендуется использовать теги форматирования, например: " +
+                "<p>...</p>,\n" +
+                "<ul>...</ul>,\n" +
+                "<ol>...</ol>,\n" +
+                "<strong>…</strong>,\n" +
+                "<em>…</em>,\n" +
+                "<blockquote> </blockquote>\n";
+        String formattingTags = "";
+
+        //проверка наличия каждого тега (искать тег до первого вхождения)
+        if (this.document.selectFirst("p") != null) {
+            formattingTags += "<p></p>, ";
+            isFormattingTagsUsed = true;
+        }
+
+        if (this.document.selectFirst("ul") != null) {
+            formattingTags += "<ul></ul>, ";
+            isFormattingTagsUsed = true;
+        }
+
+        if (this.document.selectFirst("ol") != null) {
+            formattingTags += "<ol></ol>, ";
+            isFormattingTagsUsed = true;
+        }
+
+        if (this.document.selectFirst("strong") != null) {
+            formattingTags += "<strong></strong>, ";
+            isFormattingTagsUsed = true;
+        }
+
+        if (this.document.selectFirst("em") != null) {
+            formattingTags += "<em></em>, ";
+            isFormattingTagsUsed = true;
+        }
+
+        if (this.document.selectFirst("blockquote") != null) {
+            formattingTags += "<em></em>, ";
+            isFormattingTagsUsed = true;
+        }
+
+        if (isFormattingTagsUsed) {
+            //убрать последнюю запятую
+            formattingTags = formattingTags.substring(0, formattingTags.length()-2);
+            result = "Используются теги форматирования: \n\t" + formattingTags;
         }
 
         System.out.println(result);
@@ -239,7 +301,6 @@ public class Parser  {
         return result;
     }
 
-
     //проверка вхождения ключевых слов в текст элемента
     public String getIncludedKeys(Element element, String[] keys, Boolean isIncludeKeys) {
         String result = element.normalName() + " не содержит ключевых слов\n";
@@ -280,6 +341,8 @@ public class Parser  {
         }
         return result;
     }
+
+
 
 
 

@@ -23,6 +23,7 @@ public class Main {
             parser.parseHTML(debugHTML, false);
             parser.checkTitle(keys);
             parser.checkHeaders(keys);
+            parser.checkFormattingTags();
         } catch (IOException e) {
             System.out.println("IO err 1: " + e);
         }
