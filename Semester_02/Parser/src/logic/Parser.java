@@ -61,12 +61,25 @@ public class Parser  {
         return keys;
     }
 
-    public void start() {
-        checkTitle();
-        checkHeaders();
-        checkFormattingTags();
-        checkDescription();
-        checkImgAlts();
+    public String start(boolean isTitleCheck, boolean isHeadersCheck, boolean isFormattingCheck,
+                      boolean isDescriptionCheck, boolean isAltsCheck) {
+        String result = "";
+        if (isTitleCheck) {
+            result += checkTitle();
+        }
+        if (isHeadersCheck) {
+            result += checkHeaders();
+        }
+        if (isFormattingCheck) {
+            result += checkFormattingTags();
+        }
+        if (isDescriptionCheck) {
+            result += checkDescription();
+        }
+        if (isAltsCheck) {
+            result += checkImgAlts();
+        }
+        return result;
     }
 
     public void parseHTML(String html, boolean isURL) throws IOException {

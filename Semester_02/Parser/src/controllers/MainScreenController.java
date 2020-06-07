@@ -1,10 +1,13 @@
 package controllers;
 
 import javafx.event.ActionEvent;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.ToggleGroup;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import logic.Parser;
 
 import java.io.IOException;
@@ -27,15 +30,25 @@ public class MainScreenController {
     public CheckBox checkboxDescription = new CheckBox();
     public CheckBox checkboxAlt = new CheckBox();
 
+    //переменная для сохранения результата парсинга
+    public String parseResult;
+
+    //окно с результатами
+    public TextArea resultWindow = new TextArea();
+    public Tab tabResult = new Tab();
+    public TabPane tabPane = new TabPane();
+
+    public Button buttonSave = new Button();
+    public TextField textFieldSaveAddress = new TextField();
+
+    public Button buttonShowRequirments = new Button();
+
     //инициализация свойств окна
     public void initialize() {
         //радиокнопки выбора типа ресурса
         radioResoursesString.setToggleGroup(resourseTypeRadios);
         radioResourseAddress.setToggleGroup(resourseTypeRadios);
         radioResourseAddress.setSelected(true);
-
-        //окно ввода строки или адреса ресурса
-
 
     }
 
@@ -55,7 +68,20 @@ public class MainScreenController {
             if (checkboxIsKeysCheck.isSelected()) {
                 parser.setKeys(parser.getKeys(textAreaKeys.getText()));
             }
-            parser.start();
+            //анализ выбранных элементов
+            parseResult = parser.start(  checkboxTitle.isSelected(),
+                                    checkboxHeaders.isSelected(),
+                                    checkboxFormatTags.isSelected(),
+                                    checkboxDescription.isSelected(),
+                                    checkboxAlt.isSelected());
+
+
+
+            resultWindow.setText(parseResult);
+            tabPane.getSelectionModel().select(tabResult);
+            System.out.println("TEXT" + resultWindow.getText());
+
+
 
 
         } catch (IOException e) {
@@ -63,10 +89,6 @@ public class MainScreenController {
         } catch (Exception e) {
             System.out.println("Ошибка: " + e);
         }
-
-
-
-
-
     }
+
 }

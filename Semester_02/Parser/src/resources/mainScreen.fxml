@@ -5,49 +5,82 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainScreenController">
-   <children>
-      <AnchorPane prefHeight="82.0" prefWidth="560.0">
-         <children>
-            <Label layoutX="14.0" layoutY="14.0" text="Тип анализируемого ресурса" />
-            <RadioButton fx:id="radioResourseAddress" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" text="Адрес веб-страницы в сети или локальный html-файл" />
-            <RadioButton fx:id="radioResoursesString" layoutX="359.0" layoutY="45.0" mnemonicParsing="false" text="Текст (вставка в окно ввода)" />
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="141.0" prefWidth="560.0">
-         <children>
-            <Label layoutX="16.0" layoutY="14.0" text="Введите адрес ресурса или анализируемую строку:" />
-            <TextArea fx:id="textAreaResource" layoutX="16.0" layoutY="40.0" prefHeight="122.0" prefWidth="554.0" />
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="131.0" prefWidth="560.0">
-         <children>
-            <Label layoutX="14.0" layoutY="20.0" text="Проверяемые теги:" />
-            <CheckBox fx:id="checkboxTitle" layoutX="14.0" layoutY="49.0" mnemonicParsing="false" text="&lt;tittle&gt;&lt;/title&gt;" />
-            <CheckBox fx:id="checkboxHeaders" layoutX="14.0" layoutY="79.0" mnemonicParsing="false" text="Заголовки &lt;h1&gt;&lt;/h1&gt;...&lt;h6&gt;&lt;/h6&gt;" />
-            <CheckBox fx:id="checkboxFormatTags" layoutX="14.0" layoutY="111.0" mnemonicParsing="false" text="Теги форматирования (&lt;p&gt;&lt;/p&gt; и др.)" />
-            <CheckBox fx:id="checkboxDescription" layoutX="298.0" layoutY="49.0" mnemonicParsing="false" text="&lt;meta name=&quot;description&quot; content=&quot;&quot; /&gt;" />
-            <CheckBox fx:id="checkboxAlt" layoutX="298.0" layoutY="79.0" mnemonicParsing="false" text="Атрибут alt в теге &lt;img&gt;" />
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="184.0" prefWidth="596.0">
-         <children>
-            <Label layoutX="14.0" layoutY="74.0" text="Ключевые слова (через пробел без запятых):" />
-            <TextArea fx:id="textAreaKeys" layoutX="14.0" layoutY="102.0" prefHeight="58.0" prefWidth="554.0" />
-            <CheckBox fx:id="checkboxIsKeysCheck" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" text="Анализ вхождения ключевых слов" />
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="60.0" prefWidth="560.0">
-         <children>
-            <Button fx:id="startButton" layoutX="219.0" layoutY="10.0" mnemonicParsing="false" onAction="#startParsingAction" prefHeight="38.0" prefWidth="158.0" text="Начать анализ" />
-         </children>
-      </AnchorPane>
-   </children>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-</VBox>
+<TabPane fx:id="tabPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainScreenController">
+   <tabs>
+      <Tab fx:id="tabInitial" closable="false" text="Исходные данные для анализа">
+         <content>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="636.0">
+               <children>
+                  <AnchorPane prefHeight="82.0" prefWidth="560.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" text="Тип анализируемого ресурса" />
+                        <RadioButton fx:id="radioResourseAddress" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" text="Адрес веб-страницы в сети или локальный html-файл" />
+                        <RadioButton fx:id="radioResoursesString" layoutX="359.0" layoutY="45.0" mnemonicParsing="false" text="Текст (вставка в окно ввода)" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="141.0" prefWidth="560.0">
+                     <children>
+                        <Label layoutX="16.0" layoutY="14.0" text="Введите адрес ресурса или анализируемую строку:" />
+                        <TextArea fx:id="textAreaResource" layoutX="16.0" layoutY="40.0" prefHeight="122.0" prefWidth="554.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="131.0" prefWidth="560.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="20.0" text="Проверяемые теги:" />
+                        <CheckBox fx:id="checkboxTitle" layoutX="14.0" layoutY="49.0" mnemonicParsing="false" text="&lt;tittle&gt;&lt;/title&gt;" />
+                        <CheckBox fx:id="checkboxHeaders" layoutX="14.0" layoutY="79.0" mnemonicParsing="false" text="Заголовки &lt;h1&gt;&lt;/h1&gt;...&lt;h6&gt;&lt;/h6&gt;" />
+                        <CheckBox fx:id="checkboxFormatTags" layoutX="14.0" layoutY="111.0" mnemonicParsing="false" text="Теги форматирования (&lt;p&gt;&lt;/p&gt; и др.)" />
+                        <CheckBox fx:id="checkboxDescription" layoutX="298.0" layoutY="49.0" mnemonicParsing="false" text="&lt;meta name=&quot;description&quot; content=&quot;&quot; /&gt;" />
+                        <CheckBox fx:id="checkboxAlt" layoutX="298.0" layoutY="79.0" mnemonicParsing="false" text="Атрибут alt в теге &lt;img&gt;" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="184.0" prefWidth="596.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="74.0" text="Ключевые слова (через пробел без запятых):" />
+                        <TextArea fx:id="textAreaKeys" layoutX="14.0" layoutY="102.0" prefHeight="58.0" prefWidth="554.0" />
+                        <CheckBox fx:id="checkboxIsKeysCheck" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" text="Анализ вхождения ключевых слов" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="60.0" prefWidth="560.0">
+                     <children>
+                        <Button fx:id="startButton" layoutX="219.0" layoutY="10.0" mnemonicParsing="false" onAction="#startParsingAction" prefHeight="38.0" prefWidth="158.0" text="Начать анализ" />
+                     </children>
+                  </AnchorPane>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+         </content>
+      </Tab>
+      <Tab fx:id="tabResult" closable="false" text="Результаты анализа">
+         <content>
+         <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="636.0">
+               <children>
+                  <AnchorPane prefHeight="54.0" prefWidth="636.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="19.0" text="Отчет:">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="534.0" prefWidth="636.0">
+                     <children>
+                        <TextArea fx:id="resultWindow" layoutX="14.0" layoutY="14.0" prefHeight="510.0" prefWidth="607.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="66.0" prefWidth="636.0" />
+               </children></VBox>
+         </content>
+      </Tab>
+   </tabs>
+</TabPane>

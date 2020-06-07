@@ -2,9 +2,14 @@ package logic;
 
 import controllers.MainScreenController;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,11 +19,11 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("../resources/mainScreen.fxml"));
+
         stage.setTitle("Парсер для поисковой оптимизации");
 
         MainScreenController controller = new MainScreenController();
         controller.initialize();
-
 
         stage.setScene(new Scene(root));
         stage.show();
@@ -56,6 +61,5 @@ public class Main extends Application {
 //        }
 
     }
-
 
 }
