@@ -1,5 +1,6 @@
 package logic;
 
+
 public class WordsHandler {
     //class for handling of punctuation
     public static char[] marks = {',', '.', ':', ';', '?', '/', '!', '#', '*', '(', ')', '{', '}', '[', ']', '<', '>', '&', '-'};
@@ -20,6 +21,7 @@ public class WordsHandler {
 
         boolean isAllMarksDeleted = false;
         while(!isAllMarksDeleted) {
+            isAllMarksDeleted = true;
             for (int i = 0; i < marks.length; i++) {
                 if (word.charAt(0) == marks[i]) {
                     word = word.substring(1, word.length());
@@ -27,8 +29,6 @@ public class WordsHandler {
                 } else if (word.charAt(word.length()-1) == marks[i]) {
                     word = word.substring(0, word.length()-1);
                     isAllMarksDeleted = false;
-                } else {
-                    isAllMarksDeleted = true;
                 }
             }
         }

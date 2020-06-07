@@ -4,7 +4,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.junit.Assert;
+import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -45,7 +48,17 @@ public class Parser  {
 
 
     public void setKeys(String ... keys) {
-        this.keyWords = keys;
+        if (keys.length > 0) {
+            this.keyWords = keys;
+        }
+    }
+
+    public String[] getKeys(String string) {
+        String[] keys = string.split(" ");
+        for (int i = 0; i < keys.length; i++) {
+            keys[i] = WordsHandler.handle(keys[i]);
+        }
+        return keys;
     }
 
     public void start() {
@@ -72,17 +85,18 @@ public class Parser  {
         //проверка, что title существует
         if (pageTitles.size() == 0) {
             isTitleExisting = false;
-            result = "Элемента title нет на странице";
+            result = "\nЭлемента title нет на странице";
         } else {
             isTitleExisting = true;
 
             //проверка того, что это единственный элемент на странице
             if (pageTitles.size() == 1) {
                 isTitleUnique = true;
-                result += "\nЭлемент title уникален на странице - ОК\n";
+                result += "\nЭлемент title уникален на странице - ОК";
             } else {
                 isTitleUnique = false;
-                result += "\nЭлемент title не уникален на странице";
+                result += "\nЭлемент title не уникален на странице - несоответсвие";
+                return result;
             }
 
             //проверка длины содержимого title
@@ -397,7 +411,7 @@ public class Parser  {
 
     //проверка вхождения ключевых слов в текст элемента
     public String getIncludedKeys(Element element, Boolean isIncludeKeys) {
-        String result = element.normalName() + " не содержит ключевых слов\n";
+        String result = "\n" + element.normalName() + " не содержит ключевых слов";
         isIncludeKeys = false;
         String[] elementWords = element.text().split(" ");
         int keysInElement = 0;
@@ -411,14 +425,14 @@ public class Parser  {
             }
         }
         if (isIncludeKeys) {
-            result = element.normalName() + " содержит ключевые слова (количество слов: " + keysInElement + ") - ОК\n";
+            result = "\n" + element.normalName() + " содержит ключевые слова (количество слов: " + keysInElement + ") - ОК";
         }
         return result;
     }
 
     //проверка вхождения ключевых слов в текст строки
     public String getIncludedKeys(String elementText, String elementName, Boolean isIncludeKeys) {
-        String result = elementName + " не содержит ключевых слов\n";
+        String result = "\n" + elementName + " не содержит ключевых слов";
         isIncludeKeys = false;
         String[] elementWords = elementText.split(" ");
         int keysInElement = 0;
@@ -432,7 +446,7 @@ public class Parser  {
             }
         }
         if (isIncludeKeys) {
-            result = elementName + " содержит ключевые слова (количество слов: " + keysInElement + ") - ОК\n";
+            result = "\n" + elementName + " содержит ключевые слова (количество слов: " + keysInElement + ") - ОК";
         }
         return result;
     }
@@ -443,12 +457,12 @@ public class Parser  {
         //по умолчанию длина элемента меньше нормы
         isLengthOk = false;
         String result = "\nДлина " + element.normalName() + " составляет " + elementValue.length() +
-                " символов - это меньше рекомендуемой длины\n";
+                " символов - это меньше рекомендуемой длины";
 
         //проверка длины
         if (elementValue.length() >= minLength & elementValue.length() <= maxLength) {
             isLengthOk = true;
-            result = "\nДлина " + element.normalName() + " составляет "+ elementValue.length() + " символов - ОК\n";
+            result = "\nДлина " + element.normalName() + " составляет "+ elementValue.length() + " символов - ОК";
         } else if (elementValue.length() > maxLength ) {
             isLengthOk = false;
             result = "\nДлина " + element.normalName() + " составляет " + elementValue.length() +
@@ -474,6 +488,63 @@ public class Parser  {
                     " и превышает рекомендуемую длину в" + maxLength +" символов";
         }
         return result;
+    }
+
+
+    //Тесты для методов, использующие приватные поля
+
+    //Тестирование парсинга веб-страницы, локального ресурса или строки
+    @Test
+    public void testParseHTML () {
+        Parser parser = new Parser();
+        Parser parser2 = new Parser();
+
+        String address = "https://github.com/patronovskiy/817783-device";
+        String debugHTML = "  <!DOCTYPE html>\n" +
+                "  <html lang=\"ru\">\n" +
+                "    <head>\n" +
+                "      <meta charset=\"utf-8\">\n" +
+                "<meta name=\"description\" content=\"ааа мир\"" +
+                "      <title>Привет, мир!!!!!</title>\n" +
+                "    </head>\n" +
+                "    <body>\n" +
+                "      <h1>Привет, мир!</h1>\n" +
+                "      <p>Это веб-страница.</p>\n" +
+                "<div><h2></h2><h4></h4></div>"+ "<h3></h3>" +
+                "<img alt=\"alt\">" +
+                "    </body>\n" +
+                "  </html>\n";
+
+        try {
+            parser.parseHTML(address, true);
+            File input = new File("testingHTML1.html");
+            Document doc = Jsoup.parse(input, "UTF-8");
+            Assert.assertEquals("Возможно страница, с которой сравнивается вывод, устарела. " +
+                    "Проверьте актуальность данных", parser.document, doc);
+
+            parser2.parseHTML("testingHTML1.html", true);
+            Assert.assertEquals(parser2.document, doc);
+
+            parser2.parseHTML(debugHTML, false);
+            doc = Jsoup.parse(debugHTML);
+            Assert.assertEquals(parser2.document, doc);
+
+        } catch (IOException e) {
+
+        }
+    }
+
+    //тестирование метода, устанавливающего ключевые слова
+    @Test
+    public void testSetKeys() {
+        Parser parser = new Parser();
+        String[] testKeys = {"key1", "key2", "key3"};
+        parser.setKeys(testKeys);
+        Assert.assertArrayEquals("Ключевые слова не установлены в методе setKeys()", testKeys, parser.keyWords);
+
+        Parser parser2 = new Parser();
+        testKeys = new String[0];
+        Assert.assertArrayEquals("Ключевые слова не установлены в методе setKeys()", null, parser2.keyWords);
     }
 
 }
