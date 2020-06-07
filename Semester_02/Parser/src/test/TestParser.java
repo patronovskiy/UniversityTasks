@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 //Тесты
-public class TestParser extends Parser {
+public class TestParser {
 
     //HTML-код для тестирования
         String debugHTML1 = "  <!DOCTYPE html>\n" +
