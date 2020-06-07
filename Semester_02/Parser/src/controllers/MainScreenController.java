@@ -35,8 +35,8 @@ public class MainScreenController {
     public Button buttonSave = new Button();
     public TextField textFieldSaveAddress = new TextField();
 
-    public Button ButtonSavedOk = new Button();
-    public ProgressBar savingProgressBar = new ProgressBar();
+    public Button buttonClear = new Button();
+    public Button buttonClearKeys = new Button();
     public Label savedLabel = new Label();
 
     //состояние программы
@@ -50,17 +50,12 @@ public class MainScreenController {
         radioResoursesString.setToggleGroup(resourseTypeRadios);
         radioResourseAddress.setToggleGroup(resourseTypeRadios);
         radioResourseAddress.setSelected(true);
-
-        savingProgressBar.setOpacity(0);
-        savingProgressBar.setProgress(0);
         savedLabel.setText("");
     }
 
     //парсинг по нажатию кнопки
     public void startParsingAction(ActionEvent actionEvent) {
         //очистка предыдущих отчетов
-        savingProgressBar.setOpacity(0);
-        savingProgressBar.setProgress(0);
         savedLabel.setText("");
         resultWindow.setText("");
 
@@ -91,6 +86,9 @@ public class MainScreenController {
         } catch (IOException e) {
             isParsed = false;
             System.out.println("Ошибка ввода-вывода: " + e);
+        } catch (IllegalArgumentException e) {
+            radioResoursesString.setSelected(true);
+            System.out.println("Ошибка при выборе типа ресурса: " + e);
         } catch (Exception e) {
             isParsed = false;
             System.out.println("Ошибка: " + e);
@@ -106,20 +104,16 @@ public class MainScreenController {
     }
 
     public void saveOnAction(ActionEvent actionEvent) {
-        savingProgressBar.setOpacity(0);
-        savingProgressBar.setProgress(0);
         savedLabel.setText("");
-        savingProgressBar.setOpacity(100);
+
         if (isParsed == true) {
             try{
-                savingProgressBar.setProgress(25);
+
                 String address = textFieldSaveAddress.getText();
                 if (address.length() == 0) {
                     address = "отчет.txt";
                 }
                 saveReport(parseResult, address);
-                savingProgressBar.setProgress(50);
-                savingProgressBar.setProgress(100);
                 savedLabel.setText("Отчет сохранен по адресу: " + address);
                 System.out.println("Отчет сохранен");
             } catch (IOException e) {
@@ -147,6 +141,15 @@ public class MainScreenController {
             bw.flush();
             bw.close();
         }
+    }
+
+    //очистка полей ввода
+    public void clearOnAction(ActionEvent actionEvent) {
+        textAreaResource.clear();
+    }
+
+    public void clearKeysOnAction(ActionEvent actionEvent) {
+        textAreaKeys.clear();
     }
 
 }

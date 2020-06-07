@@ -11,7 +11,6 @@ import java.io.IOException;
 public class TestParser extends Parser {
 
     //HTML-код для тестирования
-
         String debugHTML1 = "  <!DOCTYPE html>\n" +
                 "  <html lang=\"ru\">\n" +
                 "    <head>\n" +
@@ -26,14 +25,6 @@ public class TestParser extends Parser {
                 "<img alt=\"alt\">" +
                 "    </body>\n" +
                 "  </html>\n";
-
-
-    //Тестирование главного метода в парсере
-    @Test
-    public void testStart() {
-    //todo
-    }
-
 
     //тестирование метода, проверяющего тег <title>
     @Test
@@ -65,24 +56,23 @@ public class TestParser extends Parser {
             //случай 1 - все ОК
             parser.parseHTML(debugHTML1, false);
             String result1 = parser.checkTitle();
-            String rightResult1 = "\nЭлемент title уникален на странице - ОК"
-                                    + "Содержимое title:\n\tПривет, мир!!!!!"
-                                    + "\nДлина title составляет 16 символов - ОК"
-                                    + "\ntitle содержит ключевые слова (количество слов: 1) - ОК";
+            String rightResult1 = "ТЕГ <title>:" +
+                                    "\n\tЭлемент title уникален на странице - ОК"
+                                    + "\n\tСодержимое title:\n\t\tПривет, мир!!!!!"
+                                    + "\n\tДлина title составляет 16 символов - ОК"
+                                    + "\n\ttitle содержит ключевые слова (количество слов: 1) - ОК\n";
             Assert.assertEquals("Метод проверки title не прошел тесты", rightResult1, result1);
 
             //случай 2 - элемент title не уникален
             parser.parseHTML(debugHTML2, false);
             String result2 = parser.checkTitle();
-            String rightResult2 = "\nЭлемент title не уникален на странице - несоответсвие";
+            String rightResult2 = "ТЕГ <title>:" +
+                                "\n\tЭлемент title не уникален на странице - несоответсвие\n";
 
         } catch (IOException e){
             System.out.println("Ошибка ввода-вывода");
         }
 
     }
-
-
-
 
 }

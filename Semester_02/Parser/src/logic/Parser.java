@@ -87,7 +87,7 @@ public class Parser  {
     }
 
     public String checkTitle() {
-        String result ="ТЕГ <title>:";
+        String result = "ТЕГ <title>:";
 
         Elements pageTitles = this.document.select("title");
 
