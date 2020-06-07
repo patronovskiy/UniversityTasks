@@ -4,10 +4,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -21,31 +23,31 @@
                   <AnchorPane prefHeight="82.0" prefWidth="560.0">
                      <children>
                         <Label layoutX="14.0" layoutY="14.0" text="Тип анализируемого ресурса" />
-                        <RadioButton fx:id="radioResourseAddress" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" text="Адрес веб-страницы в сети или локальный html-файл" />
+                        <RadioButton fx:id="radioResourseAddress" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" selected="true" text="Адрес веб-страницы в сети или локальный html-файл" />
                         <RadioButton fx:id="radioResoursesString" layoutX="359.0" layoutY="45.0" mnemonicParsing="false" text="Текст (вставка в окно ввода)" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="141.0" prefWidth="560.0">
                      <children>
                         <Label layoutX="16.0" layoutY="14.0" text="Введите адрес ресурса или анализируемую строку:" />
-                        <TextArea fx:id="textAreaResource" layoutX="16.0" layoutY="40.0" prefHeight="122.0" prefWidth="554.0" />
+                        <TextArea fx:id="textAreaResource" layoutX="16.0" layoutY="40.0" prefHeight="122.0" prefWidth="554.0" promptText="Введите адрес ресурса или текст разметки для анализа" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="131.0" prefWidth="560.0">
                      <children>
                         <Label layoutX="14.0" layoutY="20.0" text="Проверяемые теги:" />
-                        <CheckBox fx:id="checkboxTitle" layoutX="14.0" layoutY="49.0" mnemonicParsing="false" text="&lt;tittle&gt;&lt;/title&gt;" />
-                        <CheckBox fx:id="checkboxHeaders" layoutX="14.0" layoutY="79.0" mnemonicParsing="false" text="Заголовки &lt;h1&gt;&lt;/h1&gt;...&lt;h6&gt;&lt;/h6&gt;" />
-                        <CheckBox fx:id="checkboxFormatTags" layoutX="14.0" layoutY="111.0" mnemonicParsing="false" text="Теги форматирования (&lt;p&gt;&lt;/p&gt; и др.)" />
-                        <CheckBox fx:id="checkboxDescription" layoutX="298.0" layoutY="49.0" mnemonicParsing="false" text="&lt;meta name=&quot;description&quot; content=&quot;&quot; /&gt;" />
-                        <CheckBox fx:id="checkboxAlt" layoutX="298.0" layoutY="79.0" mnemonicParsing="false" text="Атрибут alt в теге &lt;img&gt;" />
+                        <CheckBox fx:id="checkboxTitle" layoutX="14.0" layoutY="49.0" mnemonicParsing="false" selected="true" text="&lt;tittle&gt;&lt;/title&gt;" />
+                        <CheckBox fx:id="checkboxHeaders" layoutX="14.0" layoutY="79.0" mnemonicParsing="false" selected="true" text="Заголовки &lt;h1&gt;&lt;/h1&gt;...&lt;h6&gt;&lt;/h6&gt;" />
+                        <CheckBox fx:id="checkboxFormatTags" layoutX="14.0" layoutY="111.0" mnemonicParsing="false" selected="true" text="Теги форматирования (&lt;p&gt;&lt;/p&gt; и др.)" />
+                        <CheckBox fx:id="checkboxDescription" layoutX="298.0" layoutY="49.0" mnemonicParsing="false" selected="true" text="&lt;meta name=&quot;description&quot; content=&quot;&quot; /&gt;" />
+                        <CheckBox fx:id="checkboxAlt" layoutX="298.0" layoutY="79.0" mnemonicParsing="false" selected="true" text="Атрибут alt в теге &lt;img&gt;" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="184.0" prefWidth="596.0">
                      <children>
                         <Label layoutX="14.0" layoutY="74.0" text="Ключевые слова (через пробел без запятых):" />
-                        <TextArea fx:id="textAreaKeys" layoutX="14.0" layoutY="102.0" prefHeight="58.0" prefWidth="554.0" />
-                        <CheckBox fx:id="checkboxIsKeysCheck" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" text="Анализ вхождения ключевых слов" />
+                        <TextArea fx:id="textAreaKeys" disable="true" layoutX="14.0" layoutY="102.0" prefHeight="58.0" prefWidth="554.0" promptText="Введите ключевые слова через пробел" />
+                        <CheckBox fx:id="checkboxIsKeysCheck" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" onAction="#checkKeysOnAction" text="Анализ вхождения ключевых слов" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="60.0" prefWidth="560.0">
@@ -75,10 +77,21 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="534.0" prefWidth="636.0">
                      <children>
-                        <TextArea fx:id="resultWindow" layoutX="14.0" layoutY="14.0" prefHeight="510.0" prefWidth="607.0" />
+                        <TextArea fx:id="resultWindow" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="510.0" prefWidth="607.0" wrapText="true">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextArea>
                      </children>
                   </AnchorPane>
-                  <AnchorPane prefHeight="66.0" prefWidth="636.0" />
+                  <AnchorPane prefHeight="71.0" prefWidth="636.0">
+                     <children>
+                        <Button fx:id="buttonSave" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#saveOnAction" prefHeight="26.0" prefWidth="140.0" text="Сохранить отчет" />
+                        <TextField fx:id="textFieldSaveAddress" layoutX="169.0" layoutY="15.0" prefHeight="26.0" prefWidth="453.0" promptText="Введите путь для сохранения отчета" />
+                        <ProgressBar fx:id="savingProgressBar" layoutX="14.0" layoutY="46.0" prefHeight="11.0" prefWidth="140.0" progress="0.0" />
+                        <Label fx:id="savedLabel" layoutX="169.0" layoutY="43.0" />
+                     </children>
+                  </AnchorPane>
                </children></VBox>
          </content>
       </Tab>
